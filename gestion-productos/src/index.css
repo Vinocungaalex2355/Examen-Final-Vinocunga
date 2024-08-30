@@ -1,0 +1,17 @@
+@import 'primereact/resources/themes/saga-blue/theme.css';
+@import 'primereact/resources/primereact.min.css';
+@import 'primeicons/primeicons.css';
+.p-button {
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.p-dialog .p-dialog-header {
+  font-size: 1.25rem;
+  color: #3f51b5;
+}
+
+.p-dialog .p-dialog-footer .p-button {
+  margin-right: 0.5rem;
+}
+
