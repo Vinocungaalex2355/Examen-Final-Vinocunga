@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { Toast } from 'primereact/toast';
-import axios from 'axios';
+import '../App.css';
 
 interface Category {
     id: number;
@@ -13,16 +12,16 @@ interface Category {
 }
 
 const Categories: React.FC = () => {
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<Category[]>([
+        { id: 1, name: 'Tecnología' },
+        { id: 2, name: 'Ciencia' },
+        { id: 3, name: 'Matemáticas' },
+        { id: 4, name: 'Literatura' },
+        { id: 5, name: 'Arte' },
+    ]);
     const [category, setCategory] = useState<Category>({ id: 0, name: '' });
     const [categoryDialog, setCategoryDialog] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
-
-    useEffect(() => {
-        axios.get('/api/categories')
-            .then(response => setCategories(response.data))
-            .catch(error => console.error('Error fetching categories:', error));
-    }, []);
+    const [, setSubmitted] = useState(false);
 
     const openNew = () => {
         setCategory({ id: 0, name: '' });
@@ -67,28 +66,39 @@ const Categories: React.FC = () => {
     };
 
     return (
-        <div>
-            <div className="card">
-                <Button label="Nueva categoria" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                <DataTable value={categories}>
-                    <Column field="name" header="Nombre" sortable></Column>
-                    <Column body={(rowData) => (
-                        <>
-                            <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editCategory(rowData)} />
-                            <Button icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => deleteCategory(rowData)} />
-                        </>
-                    )}></Column>
-                </DataTable>
+        <div className="categories-container">
+            <div className="header">
+                <h2>Gestión de Categorías</h2>
+            </div>
+            <div className="main-content">
+                <div className="data-table">
+                    <Button label="Nueva Categoría" icon="pi pi-plus" className="p-button-success" onClick={openNew} />
+                    <DataTable value={categories}>
+                        <Column field="name" header="Nombre" sortable></Column>
+                        <Column body={(rowData) => (
+                            <div className="actions">
+                                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editCategory(rowData)} />
+                                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => deleteCategory(rowData)} />
+                            </div>
+                        )}></Column>
+                    </DataTable>
+                </div>
+                <div className="buttons">
+                    <Button label="Crear" className="p-button-success" onClick={openNew} />
+                    <Button label="Leer" className="p-button-info" onClick={() => console.log("Leer")} />
+                    <Button label="Actualizar" className="p-button-warning" onClick={saveCategory} />
+                    <Button label="Borrar" className="p-button-danger" onClick={() => deleteCategory(category)} />
+                </div>
             </div>
 
-            <Dialog visible={categoryDialog} style={{ width: '450px' }} header="Detalle de la categoria " modal className="p-fluid" onHide={hideDialog}>
+            <Dialog visible={categoryDialog} style={{ width: '450px' }} header="Detalles de la Categoría" modal className="p-fluid" onHide={hideDialog}>
                 <div className="field">
-                    <label htmlFor="name">Nombre categoria</label>
+                    <label htmlFor="name">Nombre de la Categoría</label>
                     <InputText id="name" value={category.name} onChange={(e) => setCategory({ ...category, name: e.target.value })} required autoFocus />
                 </div>
                 <div className="p-dialog-footer">
                     <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-                    <Button label="guardar" icon="pi pi-check" className="p-button-text" onClick={saveCategory} />
+                    <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveCategory} />
                 </div>
             </Dialog>
         </div>

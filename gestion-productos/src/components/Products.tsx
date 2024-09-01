@@ -1,3 +1,4 @@
+// src/components/Products.tsx
 import React, { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -6,6 +7,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import axios from 'axios';
+import './Products.css'; // Importa tu archivo CSS si lo tienes para estilos personalizados
 
 interface Category {
     id: number;
@@ -80,10 +82,10 @@ const Products: React.FC = () => {
     return (
         <div>
             <div className="card">
-                <Button label="Nuevo producto" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
+                <Button label="Nuevo Producto" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
                 <DataTable value={products}>
                     <Column field="name" header="Nombre" sortable></Column>
-                    <Column field="category.name" header="Categoria" sortable></Column>
+                    <Column field="category.name" header="Categoría" sortable></Column>
                     <Column body={(rowData) => (
                         <>
                             <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editProduct(rowData)} />
@@ -93,18 +95,18 @@ const Products: React.FC = () => {
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Detalle de la categoria " modal className="p-fluid" onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '450px' }} header="Detalle del Producto" modal className="p-fluid" onHide={hideDialog}>
                 <div className="field">
-                    <label htmlFor="name">Nombre categoria</label>
+                    <label htmlFor="name">Nombre Producto</label>
                     <InputText id="name" value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })} required autoFocus />
                 </div>
                 <div className="field">
-                    <label htmlFor="category">Categoria</label>
-                    <Dropdown id="category" value={product.category} options={categories} onChange={(e) => setProduct({ ...product, category: e.value })} optionLabel="name" placeholder="Select a Category" />
+                    <label htmlFor="category">Categoría</label>
+                    <Dropdown id="category" value={product.category} options={categories} onChange={(e) => setProduct({ ...product, category: e.value })} optionLabel="name" placeholder="Selecciona una Categoría" />
                 </div>
                 <div className="p-dialog-footer">
                     <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-                    <Button label="guardar" icon="pi pi-check" className="p-button-text" onClick={saveProduct} />
+                    <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveProduct} />
                 </div>
             </Dialog>
         </div>

@@ -1,0 +1,31 @@
+.product-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.product-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.product-list-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-list-item:last-child {
+    border-bottom: none;
+}
+
+.product-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
